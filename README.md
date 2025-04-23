@@ -36,7 +36,7 @@ SEO Analyzer est une application web développée avec Next.js qui vous permet d
 - **Formulaire** : React Hook Form et Zod
 - **Analyse HTML** : Cheerio
 - **Visualisation** : Recharts
-- **API externe** : Google PageSpeed Insights (via PAGESPEED_API_KEY) pour l'analyse des performances, de l'accessibilité et du SEO
+- **API externe** : Google PageSpeed Insights pour l'analyse des performances, de l'accessibilité et du SEO
 
 ## Licence
 
