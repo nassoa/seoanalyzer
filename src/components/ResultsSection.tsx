@@ -17,7 +17,6 @@ import {
   Gauge,
   Info,
 } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
 import HeadingsAnalysis from "./HeadingsAnalysis";
 import ImagesAnalysis from "./ImagesAnalysis";
 import LinksAnalysis from "./LinksAnalysis";
@@ -25,6 +24,8 @@ import KeywordAnalysis from "./KeywordAnalysis";
 import MetaTagsAnalysis from "./MetaTagsAnalysis";
 import StructuredDataAnalysis from "./StructuredDataAnalysis";
 import AnalysisPDFButton from "./pdf/AnalysisPDFButton";
+// Remplacer l'import de SimplePerformanceCharts par ChartJsPerformanceCharts
+import ChartJsPerformanceCharts from "./ChartJsPerformanceCharts";
 
 interface ResultsSectionProps {
   results: SEOAnalysisResult;
@@ -42,7 +43,7 @@ export default function ResultsSection({ results }: ResultsSectionProps) {
     if (score >= 50) return "bg-amber-500";
     return "bg-red-500";
   };
-  console.log(results.recommendations);
+
   return (
     <Card className="p-6 shadow-lg">
       <div className="flex justify-between items-center mb-6">
@@ -218,76 +219,13 @@ export default function ResultsSection({ results }: ResultsSectionProps) {
           </Card>
         </TabsContent>
 
-        <TabsContent value="performance" className="space-y-4 mt-4">
-          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-            <h3 className="font-semibold mb-4">Score Lighthouse</h3>
-            <div className="flex items-center justify-center mb-4">
-              <div className="relative h-32 w-32">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span
-                    className={`text-3xl font-bold ${getScoreColor(
-                      results.lighthouseScore
-                    )}`}
-                  >
-                    {results.lighthouseScore}
-                  </span>
-                </div>
-                <svg className="h-32 w-32" viewBox="0 0 36 36">
-                  <path
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    fill="none"
-                    stroke="#e6e6e6"
-                    strokeWidth="2"
-                  />
-                  <path
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    fill="none"
-                    stroke={
-                      results.lighthouseScore >= 90
-                        ? "#22c55e"
-                        : results.lighthouseScore >= 50
-                        ? "#f59e0b"
-                        : "#ef4444"
-                    }
-                    strokeWidth="2"
-                    strokeDasharray={`${results.lighthouseScore}, 100`}
-                  />
-                </svg>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <p className="text-sm text-center mb-4">
-                {results.lighthouseScore >= 90
-                  ? "Excellent ! Votre site a une très bonne performance."
-                  : results.lighthouseScore >= 70
-                  ? "Bon ! Votre site a une performance correcte, mais peut être amélioré."
-                  : results.lighthouseScore >= 50
-                  ? "Moyen. Votre site nécessite des optimisations de performance."
-                  : "Faible. Votre site a des problèmes de performance importants."}
-              </p>
-
-              <h4 className="font-medium text-sm mb-2">Core Web Vitals</h4>
-              {results.lighthouseMetrics.map((metric, index) => (
-                <div key={index}>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span>{metric.name}</span>
-                    <span className={getScoreColor(metric.score * 100)}>
-                      {metric.score >= 0.9
-                        ? "Bon"
-                        : metric.score >= 0.5
-                        ? "Moyen"
-                        : "Faible"}
-                    </span>
-                  </div>
-                  <Progress
-                    value={metric.score * 100}
-                    className={getProgressColor(metric.score * 100)}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Remplacer l'utilisation de SimplePerformanceCharts par ChartJsPerformanceCharts dans la section performance */}
+        <TabsContent value="performance" className="space-y-6 mt-4">
+          {/* Utilisation du composant Chart.js */}
+          <ChartJsPerformanceCharts
+            lighthouseScore={results.lighthouseScore}
+            lighthouseMetrics={results.lighthouseMetrics}
+          />
 
           <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
             <h3 className="font-semibold mb-2">

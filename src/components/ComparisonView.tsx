@@ -8,6 +8,9 @@ import { Progress } from "@/components/ui/progress";
 import { Check, X, AlertTriangle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import ComparisonPDFButton from "./pdf/ComparisonPDFButton";
+// Remplacer l'import de SimpleComparisonPerformanceCharts par ChartJsComparisonPerformanceCharts
+import ChartJsComparisonPerformanceCharts from "./ChartJsComparisonPerformanceCharts";
+// import SimpleComparisonPerformanceCharts from "./SimpleComparisonPerformanceCharts"
 
 interface ComparisonViewProps {
   results: SEOAnalysisResult[];
@@ -79,10 +82,11 @@ export default function ComparisonView({ results }: ComparisonViewProps) {
       </div>
 
       <Tabs defaultValue="overview">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
           <TabsTrigger value="content">Contenu</TabsTrigger>
           <TabsTrigger value="technical">Technique</TabsTrigger>
+          <TabsTrigger value="performance">Performance</TabsTrigger>
           <TabsTrigger value="recommendations">Recommandations</TabsTrigger>
         </TabsList>
 
@@ -654,43 +658,13 @@ export default function ComparisonView({ results }: ComparisonViewProps) {
                 </div>
               </CardContent>
             </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Performance</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {results.map((result, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="truncate max-w-[200px]">
-                          {result.url}
-                        </span>
-                        <span className={getScoreColor(result.lighthouseScore)}>
-                          Score: {result.lighthouseScore}
-                        </span>
-                      </div>
-                      <Progress
-                        value={result.lighthouseScore}
-                        className={getProgressColor(result.lighthouseScore)}
-                      />
-                      <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs">
-                        {result.lighthouseMetrics.map((metric, idx) => (
-                          <div key={idx} className="text-center">
-                            <p className="truncate">{metric.name}</p>
-                            <span className={getScoreColor(metric.score * 100)}>
-                              {Math.round(metric.score * 100)}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
           </div>
+        </TabsContent>
+
+        {/* Remplacer l'utilisation de SimpleComparisonPerformanceCharts par ChartJsComparisonPerformanceCharts dans la section performance */}
+        <TabsContent value="performance" className="mt-4">
+          {/* Utilisation du composant Chart.js pour la comparaison */}
+          <ChartJsComparisonPerformanceCharts results={results} />
         </TabsContent>
 
         <TabsContent value="recommendations" className="mt-4">
