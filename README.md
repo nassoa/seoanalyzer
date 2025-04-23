@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SEO Analyzer
 
-## Getting Started
+**Analysez rapidement les éléments SEO de votre site web et obtenez des recommandations pour améliorer votre référencement.**
 
-First, run the development server:
+## Table des matières
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Description](#description)
+- [Fonctionnalités](#fonctionnalités)
+- [Tech Stack](#tech-stack)
+- [Licence](#licence)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Description
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+SEO Analyzer est une application web développée avec Next.js qui vous permet d'analyser rapidement les éléments SEO (balises meta, structure de titres, liens internes/externes, etc.) de n'importe quel site web. Vous obtenez des recommandations concrètes pour optimiser votre référencement et améliorer la visibilité de votre site sur les moteurs de recherche.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Fonctionnalités
 
-## Learn More
+- Analyse automatique des balises `<title>`, `<meta description>` et `<meta keywords>`
+- Vérification de la structure des titres (H1 à H6)
+- Analyse des attributs `alt` sur les images
+- Audit des liens internes et externes
+- Vérification de la vitesse de chargement et suggestions d’optimisation
+- Rapport complet avec recommandations actionnables
+- Interface claire et responsive
 
-To learn more about Next.js, take a look at the following resources:
+## Comparaison SEO
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Comparez les éléments SEO de plusieurs sites web en entrant plusieurs URLs.
+- Identifiez et comparez les forces et faiblesses de chaque site côte à côte.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+- **Framework** : [Next.js](https://nextjs.org/)
+- **Langage** : TypeScript
+- **Styling** : Tailwind CSS
+- **Formulaire** : React Hook Form et Zod
+- **Analyse HTML** : Cheerio
+- **Visualisation** : Recharts
+- **API externe** : Google PageSpeed Insights (via PAGESPEED_API_KEY) pour l'analyse des performances, de l'accessibilité et du SEO
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Licence
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Ce projet est sous licence MIT. Consultez le fichier [LICENSE](LICENSE) pour plus de détails.
