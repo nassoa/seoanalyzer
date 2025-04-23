@@ -6,6 +6,11 @@ import type {
   StructuredData,
 } from "./types";
 
+interface LighthouseMetric {
+  name: string;
+  score: number;
+}
+
 interface AnalysisData {
   title: string;
   metaDescription: string;
@@ -13,6 +18,7 @@ interface AnalysisData {
   imagesCount: number;
   wordCount: number;
   lighthouseScore: number;
+  lighthouseMetrics?: LighthouseMetric[];
   headings?: HeadingStructure;
   images?: ImageAnalysis;
   links?: LinkAnalysis;
@@ -222,6 +228,69 @@ export function generateRecommendations(
       text: "Améliorez votre score de performance en optimisant les ressources et en réduisant le temps de chargement",
       severity: "medium",
     });
+  }
+
+  // Ajout de recommandations spécifiques à la performance
+  if (data.lighthouseScore < 70) {
+    recommendations.push({
+      text: "Optimisez les images en utilisant des formats modernes comme WebP et en les compressant",
+      severity: "medium",
+    });
+
+    recommendations.push({
+      text: "Réduisez le temps de réponse du serveur pour améliorer le First Contentful Paint",
+      severity: "medium",
+    });
+
+    recommendations.push({
+      text: "Utilisez la mise en cache du navigateur pour les ressources statiques",
+      severity: "medium",
+    });
+  }
+
+  if (data.lighthouseScore < 90) {
+    recommendations.push({
+      text: "Minimisez le CSS et le JavaScript pour réduire la taille des fichiers",
+      severity: "low",
+    });
+
+    recommendations.push({
+      text: "Utilisez le chargement différé (lazy loading) pour les images hors écran",
+      severity: "medium",
+    });
+  }
+
+  // Recommandations basées sur les métriques Lighthouse
+  if (data.lighthouseMetrics) {
+    const lcp = data.lighthouseMetrics.find(
+      (m) => m.name === "Largest Contentful Paint"
+    );
+    if (lcp && lcp.score < 0.9) {
+      recommendations.push({
+        text: "Améliorez le Largest Contentful Paint en optimisant l'élément principal de votre page",
+        severity: lcp.score < 0.5 ? "high" : "medium",
+      });
+    }
+
+    const cls = data.lighthouseMetrics.find(
+      (m) => m.name === "Cumulative Layout Shift"
+    );
+    if (cls && cls.score < 0.9) {
+      recommendations.push({
+        text: "Réduisez le Cumulative Layout Shift en définissant les dimensions des images et des éléments média",
+        severity: cls.score < 0.5 ? "high" : "medium",
+      });
+    }
+
+    const tbt = data.lighthouseMetrics.find(
+      (m) => m.name === "Total Blocking Time"
+    );
+    if (tbt && tbt.score < 0.9) {
+      recommendations.push({
+        text: "Réduisez le Total Blocking Time en optimisant l'exécution du JavaScript",
+        severity: tbt.score < 0.5 ? "high" : "medium",
+      });
+    }
   }
 
   // Add some general recommendations

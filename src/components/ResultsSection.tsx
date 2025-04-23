@@ -42,7 +42,7 @@ export default function ResultsSection({ results }: ResultsSectionProps) {
     if (score >= 50) return "bg-amber-500";
     return "bg-red-500";
   };
-
+  console.log(results.recommendations);
   return (
     <Card className="p-6 shadow-lg">
       <div className="flex justify-between items-center mb-6">
@@ -298,7 +298,16 @@ export default function ResultsSection({ results }: ResultsSectionProps) {
                 .filter(
                   (rec) =>
                     rec.text.toLowerCase().includes("performance") ||
-                    rec.text.toLowerCase().includes("vitesse")
+                    rec.text.toLowerCase().includes("vitesse") ||
+                    rec.text.toLowerCase().includes("chargement") ||
+                    rec.text.toLowerCase().includes("temps") ||
+                    rec.text.toLowerCase().includes("optimis") ||
+                    rec.text.toLowerCase().includes("image") ||
+                    rec.text.toLowerCase().includes("css") ||
+                    rec.text.toLowerCase().includes("javascript") ||
+                    rec.text.toLowerCase().includes("cache") ||
+                    rec.text.toLowerCase().includes("mobile") ||
+                    rec.text.toLowerCase().includes("lighthouse")
                 )
                 .map((recommendation, index) => (
                   <li key={index} className="flex items-start">
