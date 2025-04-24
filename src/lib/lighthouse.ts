@@ -1,30 +1,36 @@
-"use server"
+"use server";
 
-import type { LighthouseMetric } from "./types"
+import type { LighthouseMetric } from "./types";
 
 export async function getLighthouseScore(url: string): Promise<{
-  score: number
-  metrics: LighthouseMetric[]
+  score: number;
+  metrics: LighthouseMetric[];
 }> {
   try {
-    const API_KEY = process.env.PAGESPEED_API_KEY
+    const API_KEY = process.env.PAGESPEED_API_KEY;
 
     if (!API_KEY) {
-      throw new Error("PageSpeed API key is not configured")
+      throw new Error("PageSpeed API key is not configured");
     }
 
-    const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}&strategy=mobile`
+    const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(
+      url
+    )}&key=${API_KEY}&strategy=mobile`;
 
-    const response = await fetch(apiUrl, { next: { revalidate: 3600 } }) // Cache for 1 hour
+    const response = await fetch(apiUrl, { next: { revalidate: 3600 } }); // Cache for 1 hour
 
     if (!response.ok) {
-      throw new Error(`PageSpeed API returned ${response.status}: ${response.statusText}`)
+      throw new Error(
+        `PageSpeed API returned ${response.status}: ${response.statusText}`
+      );
     }
 
-    const data = await response.json()
+    const data = await response.json();
 
     // Extract the overall score
-    const score = Math.round(data.lighthouseResult.categories.performance.score * 100)
+    const score = Math.round(
+      data.lighthouseResult.categories.performance.score * 100
+    );
 
     // Extract key metrics
     const metrics: LighthouseMetric[] = [
@@ -48,14 +54,14 @@ export async function getLighthouseScore(url: string): Promise<{
         name: "Speed Index",
         score: data.lighthouseResult.audits["speed-index"].score,
       },
-    ]
+    ];
 
     return {
       score,
       metrics,
-    }
+    };
   } catch (error) {
-    console.error("Error fetching Lighthouse score:", error)
+    console.error("Error fetching Lighthouse score:", error);
 
     // Return fallback data in case of error
     return {
@@ -67,6 +73,6 @@ export async function getLighthouseScore(url: string): Promise<{
         { name: "Cumulative Layout Shift", score: 0 },
         { name: "Speed Index", score: 0 },
       ],
-    }
+    };
   }
 }

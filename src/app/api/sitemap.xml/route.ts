@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from "next/server";
 
 // In a real app, you would store analyzed URLs in a database
 // For this example, we'll use a simple in-memory array
-const analyzedUrls: string[] = []
+const analyzedUrls: string[] = [];
 
 export async function GET() {
   // Generate XML sitemap
@@ -23,26 +23,26 @@ export async function GET() {
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  `,
+  `
     )
     .join("")}
-</urlset>`
+</urlset>`;
 
   // Return the XML response
   return new NextResponse(xml, {
     headers: {
       "Content-Type": "application/xml",
     },
-  })
+  });
 }
 
 export async function POST(request: Request) {
-  const { url } = await request.json()
+  const { url } = await request.json();
 
   // Add URL to the list if it doesn't exist
   if (url && !analyzedUrls.includes(url)) {
-    analyzedUrls.push(url)
+    analyzedUrls.push(url);
   }
 
-  return NextResponse.json({ success: true })
+  return NextResponse.json({ success: true });
 }
